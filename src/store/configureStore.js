@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { searchUsers, requestUsers } from '../reducers/reducer';
+import { searchUsers, requestUsers } from '../reducers/reducers';
 import thunkMiddleware from 'redux-thunk';
 
 export default () => {
@@ -9,5 +9,3 @@ export default () => {
     return store;
 
 }
-
-

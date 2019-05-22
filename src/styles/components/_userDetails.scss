@@ -1,0 +1,16 @@
+.userDetails{
+    max-width: 90%;
+    margin: 0 auto;
+    padding: $m-size;
+}
+
+.userDetails__link{
+    font-size: $m-size;
+}
+
+.divider{
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 $s-size;
+}

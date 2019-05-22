@@ -1,14 +1,13 @@
 import React from 'react';
+import UserTable from './UserTable';
 import 'normalize.css/normalize.css';
 import '../styles/styles.scss';
-import {connect} from 'react-redux';
-import UserTable from '../components/UserTable';
-import Header from '../components/Header';
-import SearchBox from '../components/SearchBox';
-import Pagination from '../components/Pagination';
-import {setSearchField, requestUsers, setCurrentPage} from '../actions/actions';
+import { connect } from 'react-redux';
+import SearchBox from './SearchBox';
+import Pagination from './Pagination';
+import { setSearchField, requestUsers, setCurrentPage } from '../actions/actions';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         searchField: state.searchUsers.searchField,
         users: state.requestUsers.users,
@@ -20,30 +19,28 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return { 
-    onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-    onRequestUsers: () => dispatch(requestUsers()),
-    onPageChange: (event) => dispatch(setCurrentPage(event.target.id))
+    return {
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+        onRequestUsers: () => dispatch(requestUsers()),
+        onPageChange: (event) => dispatch(setCurrentPage(event.target.id))
     }
 }
 
-
-class App extends React.Component{
-    
-    componentDidMount(){
+class UsersTablePage extends React.Component { 
+    componentDidMount() {
         this.props.onRequestUsers();
 
     }
 
-    render(){
+    render() {
 
-        const { searchField, onSearchChange, users, isPending, currentPage, usersPerPage, onPageChange} = this.props;
-        
+        const { searchField, onSearchChange, users, isPending, currentPage, usersPerPage, onPageChange } = this.props;
+
         //logic to filter the users according the searchField
         const filteredUsers = users.filter((user) => {
             return user.first_name.toLowerCase().includes(searchField.toLowerCase());
         });
-        
+
 
         //logic for displaying users
         const indexOfLastUser = currentPage * usersPerPage;
@@ -55,13 +52,12 @@ class App extends React.Component{
         for (let i = 1; i <= Math.ceil(filteredUsers.length / usersPerPage); i++) {
             pageNumbers.push(i);
         };
-        
-        return isPending ? 
-        <h1>Loading Users</h1> 
-        : (
+
+        return isPending ?
+            <h1>Loading Users</h1>
+            :  (
             <div>
-                <Header />
-                <SearchBox onSearchChange = {onSearchChange} />
+                <SearchBox onSearchChange={onSearchChange} />
                 <UserTable data={currentUsers} />
                 <Pagination onPageChange={onPageChange} pageNumbers={pageNumbers} />
             </div>
@@ -69,4 +65,4 @@ class App extends React.Component{
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(UsersTablePage); 
